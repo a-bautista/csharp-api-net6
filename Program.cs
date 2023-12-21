@@ -30,6 +30,10 @@ builder.Services.AddSingleton<IMongoClient>(serviceProvider =>
     return new MongoClient(settings.ConnectionString);
 });
 builder.Services.AddSingleton<IItemRepository, MongoDbItemsRepository>();
+builder.Services.AddControllers(options => 
+{
+    options.SuppressAsyncSuffixInActionNames = false;
+}); // helps to solve the problem for async in GetItemasync
 
 var app = builder.Build();
 

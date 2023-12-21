@@ -9,30 +9,34 @@ namespace MYWEBAPI.Repositories
             new Item {Id = Guid.NewGuid(), Name = "Stamina", Price = 15, CreatedDate = DateTimeOffset.UtcNow}
         };
 
-        public IEnumerable<Item> GetItems()
+        public async Task<IEnumerable<Item>> GetItemsAsync()
         {
-            return items;
+            return await Task.FromResult(items);
         }
 
-        public Item GetItemAsync(Guid Id)
+        public async Task<Item> GetItemAsync(Guid Id)
         {
-            return items.Where(item => item.Id == Id).SingleOrDefault();
+            var item = items.Where(item => item.Id == Id).SingleOrDefault();
+            return await Task.FromResult(item);
         }
 
-        public void CreateItemAsync(Item item)
+        public async Task CreateItemAsync(Item item)
         {
             items.Add(item);
+            await Task.CompletedTask;
         }
 
-        public void UpdateItemAsync(Item item)
+        public async Task UpdateItemAsync(Item item)
         {
             var index = items.FindIndex(existingItem => existingItem.Id == item.Id);
             items[index] = item;
+            await Task.CompletedTask;
         }
-        public void DeleteItemAsync(Guid id)
+        public async Task DeleteItemAsync(Guid id)
         {
             var index = items.FindIndex(existingItem => existingItem.Id == id);
             items.RemoveAt(index);
+            await Task.CompletedTask;
         }
     }
 }
