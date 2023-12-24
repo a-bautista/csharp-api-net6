@@ -10,11 +10,13 @@ namespace MYWEBAPI.Controllers
     public class ItemsController: ControllerBase
     {
         private readonly IItemRepository repository; 
+        private readonly ILogger<ItemsController> logger;
 
         // dependency injection
-        public ItemsController(IItemRepository repository){
+        public ItemsController(IItemRepository repository, ILogger<ItemsController> logger){
             this.repository = repository; // this class doesn't know which repository is being used
             //repository = new InMemRepository(); // add an interface instead of adding this instance
+            this.logger = logger;
         }
 
         [HttpGet]
@@ -23,6 +25,7 @@ namespace MYWEBAPI.Controllers
             // Get the item with Dto because 
             var items = (await repository.GetItemsAsync())
                         .Select(item => item.AsDto());
+            logger.LogInformation($"{DateTime.UtcNow:hh:mm:ss}: Retrieved {items}");
             return items;
         }
 

@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: catalog-deployment
+spec:
+  selector:
+    matchLabels:
+      app: catalog # pods managed by this label will be managed by this selector
+  template:
+    metadata:
+      labels:
+        app: catalog
+    spec:
+      containers:
+      - name: catalog
+        image: alexbr9007/csharp_catalog
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m" # 0.5 cpu
+        ports:
+        - containerPort: 80
+        env:
+          - name: MongoDbSettings__Host
+            value: mongodb-service
+
+---
+# code necessary to reach the app through kubernetes
+apiVersion: v1
+kind: Service # abstract way to expose an application running on a set of Pods as a network service
+metadata:
+  name: catalog-service
+spec:
+  selector:
+    matchLabels:
+      app: catalog
+  template:
+    metadata:
+      labels:
+        app: catalog
+  ports:
+    - port: 80
+      targetPort: 80
