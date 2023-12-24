@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
       - name: catalog
-        image: alexbr9007/csharp_catalog
+        image: alexbr9007/csharp_catalog:v2
         resources:
           limits:
             memory: "128Mi"
@@ -38,14 +38,11 @@ apiVersion: v1
 kind: Service # abstract way to expose an application running on a set of Pods as a network service
 metadata:
   name: catalog-service
+# below indicates the spec is missing the template property but the code still works
 spec:
+  type: LoadBalancer
   selector:
-    matchLabels:
-      app: catalog
-  template:
-    metadata:
-      labels:
-        app: catalog
+    app: catalog
   ports:
     - port: 80
       targetPort: 80

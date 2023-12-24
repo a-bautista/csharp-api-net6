@@ -25,7 +25,7 @@ namespace MYWEBAPI.Controllers
             // Get the item with Dto because 
             var items = (await repository.GetItemsAsync())
                         .Select(item => item.AsDto());
-            logger.LogInformation($"{DateTime.UtcNow:hh:mm:ss}: Retrieved {items}");
+            logger.LogInformation($"{DateTime.UtcNow:hh:mm:ss}: Retrieved {items.Count()} items");
             return items;
         }
 
