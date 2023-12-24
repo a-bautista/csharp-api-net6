@@ -23,6 +23,14 @@ spec:
         env:
           - name: MongoDbSettings__Host
             value: mongodb-service
+      # livenessProbe: # is the api live?
+      #   httpGet: 
+      #     path: /health/live
+      #     port: 80
+      # readinessProbe: # is the api ready to be used?
+      #   httpGet: 
+      #     path: /health/ready
+      #     port: 80
 
 ---
 # code necessary to reach the app through kubernetes
