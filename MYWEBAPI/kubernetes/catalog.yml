@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
       - name: catalog
-        image: alexbr9007/csharp_catalog:v2
+        image: alexbr9007/catalog:v2
         resources:
           limits:
             memory: "128Mi"

@@ -1,5 +1,3 @@
-using System;
-
 namespace MYWEBAPI.Dtos {
     public record ItemDto {
         public Guid Id { get; init; }

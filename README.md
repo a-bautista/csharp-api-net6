@@ -1,3 +1,7 @@
+- Build your .Net project
+
+`dotnet build mywebapi.csproj`
+
 - Run the application without Docker.
 
 `docker run -d --rm --name mongo -p 27017:27017 -v mongodbdata:/data/db mongo`
@@ -52,3 +56,11 @@ After you have pushed your image, you need to update the image in your catalog.y
 - Scale up the kubernetes cluster
 
 `kubectl scale deployments/catalog-deployment --replicas=2`
+
+- Create unit tests
+
+`dotnet new xunit -n UnitTests`
+
+- Add a reference to the MYWEBAPI project from the UnitTests
+
+`dotnet add reference ../MYWEBAPI/mywebapi.csproj`

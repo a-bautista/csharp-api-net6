@@ -7,17 +7,17 @@ ENV ASPNETCORE_URLS=http://+:80
 FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 ARG configuration=Release
 WORKDIR /src
-COPY ["mywebapi-csharp.csproj", "./"]
-RUN dotnet restore "mywebapi-csharp.csproj"
+COPY ["mywebapi.csproj", "./"]
+RUN dotnet restore "mywebapi.csproj"
 COPY . .
 WORKDIR "/src/."
-RUN dotnet build "mywebapi-csharp.csproj" -c $configuration -o /app/build
+RUN dotnet build "mywebapi.csproj" -c $configuration -o /app/build
 
 FROM build AS publish
 ARG configuration=Release
-RUN dotnet publish "mywebapi-csharp.csproj" -c $configuration -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "mywebapi.csproj" -c $configuration -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "mywebapi-csharp.dll"]
+ENTRYPOINT ["dotnet", "mywebapi.dll"]
