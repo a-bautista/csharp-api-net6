@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: catalog-deployment
+spec:
+  selector:
+    matchLabels:
+      app: catalog # pods managed by this label will be managed by this selector
+  template:
+    metadata:
+      labels:
+        app: catalog
+    spec:
+      containers:
+      - name: catalog
+        image: alexbr9007/catalog:v2
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m" # 0.5 cpu
+        ports:
+        - containerPort: 80
+        env:
+          - name: MongoDbSettings__Host
+            value: mongodb-service
+      # livenessProbe: # is the api live?
+      #   httpGet: 
+      #     path: /health/live
+      #     port: 80
+      # readinessProbe: # is the api ready to be used?
+      #   httpGet: 
+      #     path: /health/ready
+      #     port: 80
+
+---
+# code necessary to reach the app through kubernetes
+apiVersion: v1
+kind: Service # abstract way to expose an application running on a set of Pods as a network service
+metadata:
+  name: catalog-service
+# below indicates the spec is missing the template property but the code still works
+spec:
+  type: LoadBalancer
+  selector:
+    app: catalog
+  ports:
+    - port: 80
+      targetPort: 80
