@@ -57,7 +57,7 @@ namespace MYWEBAPI.UnitTests
         }
 
         // [Fact]
-        // public async Task GetItemAsync_WithUnexistingItem_ReturnsAllItems() {
+        // public async Task GetItemAsync_WithExistingItems_ReturnsAllItems() {
         //     // Arrange
         //     var expectedItems = new[] { CreateRandomItem(), CreateRandomItem(), CreateRandomItem() };
 
@@ -67,7 +67,8 @@ namespace MYWEBAPI.UnitTests
         //     var controller = new ItemsController(repositoryStub.Object, loggerStub.Object);
 
         //     // Act
-        //     var actualItems = await controller.GetItemAsync(Guid.NewGuid());
+        //     // var actualItems = await controller.GetItemAsync();
+        //     var actualItems = await controller.GetItemsAsync(Guid.NewGuid());
 
         //     // Assert
         //     actualItems.Should().BeEquivalentTo(

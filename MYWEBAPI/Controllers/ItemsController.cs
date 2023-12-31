@@ -32,6 +32,10 @@ namespace MYWEBAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<ItemDto>> GetItemAsync(Guid id)
         {
+            // if (id == Guid.Empty){
+            //     return await GetItemsAsync();
+            // }
+
             var item = await repository.GetItemAsync(id);
             if (item == null)
             {
