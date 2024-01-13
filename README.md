@@ -32,6 +32,8 @@
 
 `docker run -it --rm -p 8085:80 -e MongoDbSettings:Host=mongodbmylibrary -e MongoDbSettings:Port=27017 --network=mylibrary mylibrary:v3`
 
+I had to specifically use the port 27017 on the new API because that is the port from the container. 
+
 - Create the image for docker hub, so Kubernetes can use it
 
 `docker build -t alexbr9007/catalog:v2 . `
