@@ -1,3 +1,7 @@
+- Create your .Net project
+
+`dotnet new webapi -n myapi`
+
 - Build your .Net project
 
 `dotnet build mywebapi.csproj`
@@ -14,13 +18,19 @@
 
 `docker network create sample`
 
-- Start the mongo image in the same network as the catalog
+- Start the mongo image in the same network as the catalog. First is the name of the image, in this case it is mongo and the second name is the actual image that yuou will use. 
 
 `docker run -d --rm --name mongo -p 27017:27017 -v mongodbdata:/data/db --network=nettutorial mongo`
+
+`docker run -d --rm --name mongodbmylibrary -p 27010:27017 -v mongodbdata:/data/db --network=mylibrary mongo`
 
 - Start the catalog
 
 `docker run -it --rm -p 8085:80 -e MongoDbSettings:Host=mongo --network=nettutorial catalog:v3`
+
+`docker run -it --rm -p 8085:80 -e MongoDbSettings:Host=mongodbmylibrary --network=mylibrary mylibrary:v2`
+
+`docker run -it --rm -p 8085:80 -e MongoDbSettings:Host=mongodbmylibrary -e MongoDbSettings:Port=27017 --network=mylibrary mylibrary:v3`
 
 - Create the image for docker hub, so Kubernetes can use it
 
